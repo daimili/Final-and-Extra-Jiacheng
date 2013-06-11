@@ -1,0 +1,28 @@
+<h1>Listing follow_boards</h1>
+
+<table class="table table-striped table-hover">
+  <tr>
+    <th>User</th>
+    <th>Board</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @follow_boards.each do |follow_board| %>
+  <tr>
+    <td><%= follow_board.user.name %></td>
+    <td><%= follow_board.board.name %></td>
+    <td><%= link_to 'Show', follow_board, class: 'btn btn-primary' %></td>
+    <td><%= link_to 'Edit', edit_follow_board_path(follow_board), class: 'btn btn-warning' %></td>
+    <td><%= link_to 'Destroy', follow_board, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+
+
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Follow board', new_follow_board_path, class: 'btn' %>

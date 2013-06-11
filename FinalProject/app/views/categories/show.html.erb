@@ -1,0 +1,27 @@
+<h1> <%= @category.name %> Category  </h1>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @category.name %>
+</p>
+
+<% if @boards.present? %>
+<h2>Boards: </h2>
+    <ul>
+      <% @boards.each do |p| %>
+        <% if p.pins.present? %>
+          <li> <%= link_to p.name, board_path(p) %>
+              <%= link_to "Follow", follow_boards_path(:board_id => p), :method => :post %> </li>
+          <%= image_tag p.pins.first.source, :size => "260x180" %>
+        <% else %>
+          <%= link_to p.description, board_path(p) %>
+        <% end %>
+      <% end %>
+    </ul>
+<% else %>
+<p> there is no board in this category </p>
+<% end %>
+
+<%= link_to 'Back', categories_path %>

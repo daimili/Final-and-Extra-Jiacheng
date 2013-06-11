@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @board.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @board.description %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @board.user.name %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @board.category.name %>
+</p>
+
+<% if @pins.present? %>
+<li>
+    Pins:
+    <ul>
+      <% @pins.each do |p| %>
+        <li> <%= link_to p.description, p %> </li>
+          <% if current_user.id != @board.user.id %>
+
+              <%= form_for(@like) do |f| %>
+              <%= f.hidden_field :pin_id, :value => p.id %>
+              <%= f.submit "Like it"%>
+              <% end %>
+
+          <%end %>
+          <%= image_tag p.source, :size => "260x180" %>
+      <% end %>
+    </ul>
+</li>
+<% else %>
+  <p> Pins: You do not have a pin in this board yet, create one? </p>
+<% end %>
+
+<% if current_user.name == @board.user.name %>
+  <%= link_to 'New Pin', new_pin_path, class: 'btn btn-primary' %>
+  <%= link_to 'Edit', edit_board_path(@board), class: 'btn btn-warning' %>
+  <%= link_to 'Destroy', @board, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+<%end%>
+<%= link_to 'Back', user_path(current_user), class: 'btn'%>

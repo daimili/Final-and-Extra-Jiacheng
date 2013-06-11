@@ -1,0 +1,130 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @user.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @user.email %>
+</p>
+
+<p>
+  <b>Gender:</b>
+  <%= @user.gender %>
+</p>
+<div class="navbar navbar-text">
+  <div class="navbar-inner containercolor">
+    <div class="container">
+    <ul class="nav">
+
+      <li><a href="#" id="board-toggle"> board</a></li>
+      <li><a href="#" id="pin-toggle"> pin </a></li>
+      <li><a href="#" id="like-toggle"> like </a></li>
+      <li><a href="#" id="following-toggle"> following </a></li>
+      <li><a href="#" id="follower-toggle"> follower </a></li>
+    </ul>
+    </div>
+  </div>
+</div>
+<div class ="field" id="board">
+
+  <% if @boards.present? %>
+    <h2>Boards: </h2>
+      <ul>
+        <% @boards.each do |b| %>
+          <li> <%= link_to b.name, user_board_path(@user, b) %>
+            <%if current_user == @user%>
+            (<%= link_to "remove", b, :method => :delete %>)
+            <%end%>
+          </li>
+        <% end %>
+      </ul>
+  <% else %>
+	 You do not have a board yet, create one?
+  <% end %>
+  <% if current_user.name == @user.name %>
+    <%= link_to 'New Board', new_board_path, class: 'btn' %>
+    <%end%>
+</div>
+
+<div class = "field" id= "pin">
+  <% if @pins.present? %>
+    <h2> Pins: </h2>
+      <ul>
+        <% @pins.each do |p| %>
+        <li> <%= link_to p.description, user_pin_path(@user, p) %>
+          <%if current_user == @user%>
+          (<%= link_to "remove", p, :method => :delete %>)
+          <%end%>
+        </li>
+        <% end %>
+      </ul>
+  <% else %>
+    <p> You do not have a pin yet, create one? </p>
+  <% end %>
+  <% if current_user.name == @user.name %>
+    <%= link_to 'New Pin', new_pin_path, class: 'btn' %>
+  <% end %>
+</div>
+
+
+<div class = "field" id= "like">
+  <h2> Likes: </h2>
+  <% if @likes.present? %>
+      <ul>
+        <% @likes.each do |p| %>
+        <li> <%= link_to Pin.find(p.pin_id).description, user_pin_path(@user, Pin.find(p.pin_id)) %>
+          <%if current_user == @user%>
+          (<%= link_to "remove", p, :method => :delete %>)
+          <%end%>
+        </li>
+        <% end %>
+      </ul>
+  <% else %>
+    <p> do not have a like one yet </p>
+  <% end %>
+  <% if current_user.name == @user.name %>
+    <%= link_to 'New Like', pins_path, class: 'btn' %>
+  <% end %>
+</div>
+
+
+
+
+
+
+
+<div class = "field" id= "following">
+  <h2> Following</h2>
+    <% if @user.follows.present? %>
+      <ul>
+        <% for follow in @user.follows %>
+          <li>
+            <%=h follow.follower.name %>
+            <%if current_user == @user%>
+              (<%= link_to "remove", follow, :method => :delete %>)
+              <%end%>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p> You do not follow anyone yet, find someone to follow? </p>
+    <% end %>
+    <% if current_user.name == @user.name %>
+  <p><%= link_to "Find ppl to follow", addfriends_url(current_user), class: 'btn' %></p>
+  <%end%>
+</div>
+
+<div class = "field" id= "follower">
+  <h2> follower</h2>
+    <ul>
+      <% for user in @user.inverse_followers %>
+      <li><%=h user.name %></li>
+      <% end %>
+    </ul>
+</div>
+
+<br></br>
+

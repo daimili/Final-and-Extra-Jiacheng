@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Description:</b>
+  <%= @pin.description %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @pin.user.name %>
+</p>
+
+<p>
+  <b>Board:</b>
+  <%= @pin.board.name %>
+</p>
+
+<p>
+  <b>Picture:</b>
+  <%= image_tag @pin.source, :size => "260x180" %>
+</p>
+
+<%= form_for(@like) do |f| %>
+  <%= f.hidden_field :pin_id, :value => @pin.id %>
+  <%= f.submit "Like it"%>
+<%end%>
+<h2>Comments</h2>
+<% @pin.comments.each do |comment| %>
+  <ul>
+    <% user = User.find(comment.user_id) %>
+    <li><%= user.name %>  :  <%= comment.content %></li>
+  </ul>
+
+
+<% end %>
+
+<% if signed_in? %>
+	<h2>Add a comment:</h2>
+		<%= form_for([@pin, @pin.comments.build]) do |f| %>
+  	<div class="field">
+    	<%= f.hidden_field :pin_id, :value => @pin.id %>
+  	</div>
+  	<div class="field">
+   		 <%= f.hidden_field :user_id, :value => current_user.id %>
+  	</div>
+  	<div class="field">
+    	<%= f.label :content %><br />
+    	<%= f.text_area :content, :rows=>5, :cols=>40 %>
+  	</div>
+  	<div class="actions">
+   		 <%= f.submit %>
+  	</div>
+	<% end %>
+<%end%>
+
+<% if current_user.name == @pin.user.name %>
+  <%= link_to 'Edit', edit_pin_path(@pin), class: 'btn btn-warning' %>
+  <%= link_to 'Destroy', @pin, class: 'btn btn-danger',method: :delete, data: { confirm: 'Are you sure?' } %>
+  <%= link_to 'Back', user_path(current_user), class: 'btn' %>
+<%end%>

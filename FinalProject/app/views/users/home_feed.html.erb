@@ -1,0 +1,58 @@
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script src="/path/to/jquery.masonry.min.js"></script>
+
+<p>   <%= link_to "your personal profile" ,user_path(current_user.id), class: 'btn' %> </p>
+
+<div id="container">
+<ul>
+      <% @follow_boards.each do |b| %>
+      	<% b.board.pins.each do |p| %>
+                  <div class="item">
+      	     <%= link_to(image_tag('pin.png'),addpin_path(:pin_id=>p.id))
+                                    %>
+
+                  <%= link_to(image_tag('like.png'),likes_path(:like=>{"pin_id"=>p.id}), :method => :post)
+                                    %>
+                  <%= image_tag p.source%>
+                  <%=p.description%>
+                  </div>
+      	<% end %>
+      <% end %>
+
+      <% if @friends.present? %>
+            <% @friends.each do |f| %>
+                  <% user = User.find_by_id(f.follower_id) %>
+                  <% user.boards.each do |b| %>
+                        <% b.pins.each do |p| %>
+                        <div class="item">
+                              <%= link_to(image_tag('pin.png'),addpin_path(:pin_id=>p.id))
+                                    %>
+
+                              <%= link_to(image_tag('like.png'),likes_path(:like=>{"pin_id"=>p.id}), :method => :post)
+                                    %>
+                              <%= image_tag p.source%>
+                              <%=p.description%>
+                              </div>
+                        <% end %>
+                  <% end %>
+            <% end %>
+      <% end %>
+
+
+
+
+
+</div>
+<script>
+var $container = $('#container');
+$container.imagesLoaded(function(){
+  $container.masonry({
+    itemSelector : '.item',
+      columnWidth : 420
+  });
+});
+</script>
+
+</ul>
+

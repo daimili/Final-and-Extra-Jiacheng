@@ -1,0 +1,20 @@
+Things do not to do:
+1.Please run rake db:seed just one time, otherwise it will add some repetitive entries into database.
+we put some data already in database, and there is not much that db:seed will do.
+
+2.Also please use Chrome browser instead of others, due to that other may not support CSS we added. 
+
+3.Don't recreate whole table again, because our group have loaded many data into database for your convenience.
+
+
+Things we have done:
+
+1.password chaning notification email and new user welcome email
+2.using some coffeescript in user.js.coffee and in the show view of users
+3.user could add comment to a specific pin,f ollow other users, have their board and put pins in the board, also
+user could follow other users' board. all the things that a user follow will show up in the user's home_feed page. boards are showed in the board index page and u can find boards in different categories in category's index page.
+4. call_back used in user model.
+
+
+Note:
+Some picture's may change dynamically, so some pictures may don't show successfully.

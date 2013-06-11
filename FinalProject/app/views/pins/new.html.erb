@@ -1,0 +1,13 @@
+<h1>New pin</h1>
+
+<%if signed_in? %>
+  <% if current_user.boards.present? %>
+      <%= render 'form' %>
+      <%= link_to 'Back', user_path(current_user) %>
+  <% else %>
+      <p>There is no board in your account, you should create one first, redirecting........</p>
+      <meta http-equiv="refresh" content="3;url=<%=new_board_path%>">
+  <% end%>
+<% else %>
+  You are not signed in yet!
+<% end %>

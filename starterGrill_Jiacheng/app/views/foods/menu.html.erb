@@ -1,0 +1,40 @@
+<h1>Menu</h1>
+
+<ul>
+  <li>
+    Starters
+    <ul>
+      <% @starters.each do |s| %>
+      <li> $<%= s.price %>  <%= s.name %> <br /> <%= s.description%></li> 
+      <% end %>
+    </ul>
+  </li>
+  
+  <li>
+    Entrees
+    <ul>
+      <% @entrees.each do |s| %>
+      <li> $<%= s.price %>  <%= s.name %> <br /> <%= s.description%></li> 
+      <% end %>
+    </ul>
+  </li>
+
+   <li>
+    Drinks
+    <ul>
+      <% @drinks.each do |s| %>
+      <li> $<%= s.price %>  <%= s.name %> <br /> <%= s.description%></li> 
+      <% end %>
+    </ul>
+  </li>
+
+   <li>
+    Desserts
+    <ul>
+      <% @desserts.each do |s| %>
+      <li> $<%= s.price %>  <%= s.name %> <br /> <%= s.description%></li> 
+      <% end %>
+    </ul>
+  </li>
+
+</ul>
